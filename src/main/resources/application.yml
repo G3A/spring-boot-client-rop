@@ -1,0 +1,40 @@
+logging:
+    level:
+        root: INFO
+management:
+    endpoint:
+        health:
+            probes:
+                enabled: true
+    observations:
+        annotations:
+            enabled: true
+    otlp:
+        tracing:
+            endpoint: http://localhost:4318/v1/traces
+    tracing:
+        sampling:
+            probability: 1.0
+otel:
+    logs:
+        exporter:
+            enabled: flase
+server:
+    compression:
+        enabled: true
+        mime-types: '*/*'
+spring:
+    application:
+        name: spring-boot-client-rop
+        threads:
+            virtual:
+                enabled: true
+    jackson:
+        time-zone: America/Bogota
+    profiles:
+        active: '@spring.profiles.active@'
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 5MB
+            max-request-size: 5MB
