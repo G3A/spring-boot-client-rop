@@ -1,4 +1,4 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre;
+package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
 
 /**
  * Ejemplo de uso con campos opcionales y requeridos
@@ -22,7 +22,7 @@ package co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre;
  * @param alias alias opcional del usuario
  * @param ciudad ciudad opcional del usuario
  */
-public record ActualizarEmailYNombreCommand(
+public record ActualizarPerfilUsuarioCommand(
         String email,
         String name,
         String password,
@@ -59,7 +59,7 @@ public record ActualizarEmailYNombreCommand(
     public interface CommandBuilderWithCamposOpcionales {
         Builder setAlias(String alias);
         Builder setCiudad(String ciudad);
-        ActualizarEmailYNombreCommand build();
+        ActualizarPerfilUsuarioCommand build();
     }
 
     // Clase Builder que implementa las interfaces
@@ -122,8 +122,8 @@ public record ActualizarEmailYNombreCommand(
         }
 
         @Override
-        public ActualizarEmailYNombreCommand build() {
-            return new ActualizarEmailYNombreCommand(
+        public ActualizarPerfilUsuarioCommand build() {
+            return new ActualizarPerfilUsuarioCommand(
                     email,
                     name,
                     password,

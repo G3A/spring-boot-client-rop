@@ -1,9 +1,9 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre;
+package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
 
 import co.g3a.functionalrop.core.DeadEnd;
 import co.g3a.functionalrop.core.Result;
 import co.g3a.functionalrop.utils.BiFunc;
-import co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre.ActualizarEmailYNombreApiErrorResponseBuilder.ErrorDefinitions;
+import co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
 import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,16 +13,16 @@ import java.util.function.Function;
 
 @Service
 @Slf4j
-class ActualizarEmailYNombreService {
+class ActualizarPerfilUsuarioService {
     private final DeadEnd deadEnd;
 
-    ActualizarEmailYNombreService(DeadEnd deadEnd) {
+    ActualizarPerfilUsuarioService(DeadEnd deadEnd) {
         this.deadEnd = deadEnd;
     }
 
-    @Observed(name = "canonicalize.detail", contextualName = "canonicalize-detail")
-    public ActualizarEmailYNombreCommand canonicalizeEmail(ActualizarEmailYNombreCommand comando) {
-        return ActualizarEmailYNombreCommand.Builder.create()
+    @Observed(name = "normalizar.email", contextualName = "normalizar-email")
+    public ActualizarPerfilUsuarioCommand normalizarEmail(ActualizarPerfilUsuarioCommand comando) {
+        return ActualizarPerfilUsuarioCommand.Builder.create()
                 .setEmail(comando.email().trim().toLowerCase())
                 .setName(comando.name())
                 .setPassword(comando.password())
@@ -30,16 +30,16 @@ class ActualizarEmailYNombreService {
                 .build();
     }
 
-    @Observed(name = "update.db", contextualName = "update-db")
-    public CompletionStage<Result<ActualizarEmailYNombreCommand, ErrorDefinitions>> updateDb(ActualizarEmailYNombreCommand cmd) {
+    @Observed(name = "actualizar.perfil", contextualName = "actualizar-perfil")
+    public CompletionStage<Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions>> actualizarPerfil(ActualizarPerfilUsuarioCommand cmd) {
         return executeAsyncWithEmail(
                 cmd,
-                this::updateDbWithEmail,
+                this::actualizarPerfilWithEmail,
                 throwable -> new ErrorDefinitions.DbError("❌ Error al actualizar la base de datos: " + throwable.getMessage())
         );
     }
 
-    private Result<ActualizarEmailYNombreCommand, ErrorDefinitions> updateDbWithEmail(ActualizarEmailYNombreCommand cmd, Email email) {
+    private Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions> actualizarPerfilWithEmail(ActualizarPerfilUsuarioCommand cmd, Email email) {
         log.info("🚀 Iniciando proceso de actualización de usuario en base de datos. Email: {}", email);
         sleepSimulatedDbLatency();
 
@@ -47,34 +47,34 @@ class ActualizarEmailYNombreService {
         return Result.success(cmd);
     }
 
-    @Observed(name = "send.detail", contextualName = "send-detail")
-    public CompletionStage<Result<ActualizarEmailYNombreCommand, ErrorDefinitions>> sendEmail(ActualizarEmailYNombreCommand cmd) {
+    @Observed(name = "enviar.notificacion", contextualName = "enviar-notificacion")
+    public CompletionStage<Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions>> enviarNotificacion(ActualizarPerfilUsuarioCommand cmd) {
         return executeAsyncWithEmail(
                 cmd,
-                this::sendEmailWithEmail,
+                this::enviarNotificacionWithEmail,
                 throwable -> new ErrorDefinitions.EmailSendError("❌ Error al enviar el correo electrónico: " + throwable.getMessage())
         );
     }
 
-    private Result<ActualizarEmailYNombreCommand, ErrorDefinitions> sendEmailWithEmail(ActualizarEmailYNombreCommand cmd, Email email) {
+    private Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions> enviarNotificacionWithEmail(ActualizarPerfilUsuarioCommand cmd, Email email) {
         log.info("📧 Enviando correo de confirmación al destinatario: {}", email);
         sleepSimulatedEmailLatency();
         log.info("✔️ Correo de confirmación enviado exitosamente a: {}", email);
         return Result.success(cmd);
     }
 
-    @Observed(name = "generate.activation.code", contextualName = "generate-activation-code")
-    public CompletionStage<Result<String, ErrorDefinitions>> generateActivationCode(ActualizarEmailYNombreCommand cmd) {
+    @Observed(name = "generar.codigo.activacion", contextualName = "generar-codigo-activacion")
+    public CompletionStage<Result<String, ErrorDefinitions>> generarCodigoActivacion(ActualizarPerfilUsuarioCommand cmd) {
         return deadEnd.runSafeResultTransform(
                 cmd,
                 input -> Email.create(input.email())
-                        .flatMap(this::generateCodeFromEmail),
+                        .flatMap(this::generarCodigoActivacionFromEmail),
                 throwable -> new ErrorDefinitions.ActivationCodeError("❌ Error al generar el código de activación: " + throwable.getMessage())
         );
     }
 
-    @Observed(name = "generate.code.from.detail", contextualName = "generate-code-from-detail")
-    public Result<String, ErrorDefinitions> generateCodeFromEmail(Email email) {
+
+    private Result<String, ErrorDefinitions> generarCodigoActivacionFromEmail(Email email) {
         log.info("🔑 Generando código de activación para el detail: {}", email.value());
         ActivationCode code = new ActivationCode();
         /*
@@ -86,16 +86,16 @@ class ActualizarEmailYNombreService {
         return Result.success(code.value());
     }
 
-    private CompletionStage<Result<ActualizarEmailYNombreCommand, ErrorDefinitions>> executeAsyncWithEmail(
-            ActualizarEmailYNombreCommand cmd,
-            BiFunc<ActualizarEmailYNombreCommand, Email, Result<ActualizarEmailYNombreCommand, ErrorDefinitions>> operation,
+    private CompletionStage<Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions>> executeAsyncWithEmail(
+            ActualizarPerfilUsuarioCommand cmd,
+            BiFunc<ActualizarPerfilUsuarioCommand, Email, Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions>> operation,
             Function<Throwable, ErrorDefinitions> onError
     ) {
         return deadEnd.runSafeResultTransform(
                 cmd,
                 command -> {
                     Result<Email, ErrorDefinitions> emailResult = Email.create(command.email());
-                    Result<ActualizarEmailYNombreCommand, ErrorDefinitions> result;
+                    Result<ActualizarPerfilUsuarioCommand, ErrorDefinitions> result;
                     if (emailResult.isSuccess()) {
                         result = operation.apply(command, emailResult.getValue());
                     } else {

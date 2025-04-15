@@ -1,4 +1,4 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre;
+package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
 
 import co.g3a.springbootclientrop.shared.errorhandling.ApiErrorResponse;
 import co.g3a.springbootclientrop.shared.errorhandling.Constantes;
@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ActualizarEmailYNombreApiErrorResponseBuilder {
+public class ActualizarPerfilUsuarioApiErrorResponseBuilder {
 
 
     private final co.g3a.springbootclientrop.shared.errorhandling.ApiErrorResponseBuilder apiErrorResponseBuilder;
 
-    public ActualizarEmailYNombreApiErrorResponseBuilder(co.g3a.springbootclientrop.shared.errorhandling.ApiErrorResponseBuilder apiErrorResponseBuilder) {
+    public ActualizarPerfilUsuarioApiErrorResponseBuilder(co.g3a.springbootclientrop.shared.errorhandling.ApiErrorResponseBuilder apiErrorResponseBuilder) {
         this.apiErrorResponseBuilder = apiErrorResponseBuilder;
     }
 
@@ -93,7 +93,7 @@ public class ActualizarEmailYNombreApiErrorResponseBuilder {
             case ErrorDefinitions.ActivationCodeError e -> "Error generando código: " + e.detail();
             case ErrorDefinitions.MultipleErrors e ->
                     "Se encontraron varios errores:\n" + e.errors().stream()
-                            .map(ActualizarEmailYNombreApiErrorResponseBuilder::toReturnMessage)
+                            .map(ActualizarPerfilUsuarioApiErrorResponseBuilder::toReturnMessage)
                             .map(msg -> " - " + msg)
                             .collect(Collectors.joining("\n"));
         };

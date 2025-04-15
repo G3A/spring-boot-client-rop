@@ -1,4 +1,4 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre;
+package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
 
 import io.micrometer.observation.annotation.Observed;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,17 +20,17 @@ import java.util.concurrent.CompletionStage;
 @RestController
 @RequestMapping("/usuario")
 @Slf4j
-class ActualizarEmailYNombreCommandController {
-    private final ActualizarEmailYNombreUseCase actualizarEmailYNombreUseCase;
-    private final ActualizarEmailYNombreApiErrorResponseBuilder errorBuilder;
+class ActualizarPerfilUsuarioController {
+    private final ActualizarPerfilUsuarioUseCase actualizarPerfilUsuarioUseCase;
+    private final ActualizarPerfilUsuarioApiErrorResponseBuilder errorBuilder;
 
-    ActualizarEmailYNombreCommandController(ActualizarEmailYNombreUseCase actualizarEmailYNombreUseCase,
-                                            ActualizarEmailYNombreApiErrorResponseBuilder errorBuilder) {
-        this.actualizarEmailYNombreUseCase = actualizarEmailYNombreUseCase;
+    ActualizarPerfilUsuarioController(ActualizarPerfilUsuarioUseCase actualizarPerfilUsuarioUseCase,
+                                      ActualizarPerfilUsuarioApiErrorResponseBuilder errorBuilder) {
+        this.actualizarPerfilUsuarioUseCase = actualizarPerfilUsuarioUseCase;
         this.errorBuilder = errorBuilder;
     }
 
-    public record ActualizarEmailYNombreRequest(
+    public record ActualizarPerfilUsuarioRequest(
             @NotEmpty(message = "El correo no puede estar vacío.")
             @Email(message = "El correo debe ser válido.")
             String email,
@@ -49,15 +49,15 @@ class ActualizarEmailYNombreCommandController {
 
 
     @PutMapping
-    @Observed(name = "actualizar.nombre.detail.usuario.request", contextualName = "actualizar-nombre-detail-usuario-request")
-    CompletionStage<ResponseEntity<?>> actualizarNombreEmailUsuario(
-            @RequestBody @Valid ActualizarEmailYNombreCommandController.ActualizarEmailYNombreRequest request,
+    @Observed(name = "actualizar.perfil.usuario.request", contextualName = "actualizar-perfil-usuario-request")
+    CompletionStage<ResponseEntity<?>> actualizarPerfilUsuario(
+            @RequestBody @Valid ActualizarPerfilUsuarioController.ActualizarPerfilUsuarioRequest request,
             HttpServletRequest httpRequest
     ) {
 
         log.info("Se inicia la actualización de los datos del usuario {}", request.name);
 
-        var comando = ActualizarEmailYNombreCommand.Builder.create()
+        var comando = ActualizarPerfilUsuarioCommand.Builder.create()
                 .setEmail(request.email)
                 .setName(request.name)
                 .setPassword(request.password)
@@ -65,7 +65,7 @@ class ActualizarEmailYNombreCommandController {
                 .build();
 
 
-        return actualizarEmailYNombreUseCase.run(comando)
+        return actualizarPerfilUsuarioUseCase.run(comando)
                 .thenApply(result -> result.fold(
                         error -> errorBuilder.from(error, httpRequest),
                         ResponseEntity::ok

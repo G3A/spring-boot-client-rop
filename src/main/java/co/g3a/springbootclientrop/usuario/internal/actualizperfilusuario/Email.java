@@ -1,6 +1,6 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre;
+package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
 
-import co.g3a.springbootclientrop.usuario.internal.actualizaremailynombre.ActualizarEmailYNombreApiErrorResponseBuilder.ErrorDefinitions;
+import co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
 import co.g3a.functionalrop.core.Result;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ public record Email(String value) {
                 .flatMap(Email::asegurarFormato)
                 .flatMap(Email::asegurarDominioValido)
                 .flatMap(Email::asegurarContenidoValido)
-                .flatMap(Email::crearSiNoHayErrores);
+                .flatMap(Email::build);
     }
 
 
@@ -64,7 +64,7 @@ public record Email(String value) {
         return Result.success(email);
     }
 
-    private static Result<Email, ErrorDefinitions> crearSiNoHayErrores(String email){
+    private static Result<Email, ErrorDefinitions> build(String email){
         return Result.success(new Email(email));
     }
 
