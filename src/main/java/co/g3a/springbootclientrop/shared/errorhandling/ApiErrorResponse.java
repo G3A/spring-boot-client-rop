@@ -7,6 +7,7 @@ public record ApiErrorResponse(
     Instant timestamp,
     String level,
     String message,
+    String traceId,
     String userId,
     String sessionId,
     String environment,

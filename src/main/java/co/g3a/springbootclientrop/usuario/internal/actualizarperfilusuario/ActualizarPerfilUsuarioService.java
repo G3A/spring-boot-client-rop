@@ -1,9 +1,9 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
+package co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario;
 
 import co.g3a.functionalrop.core.DeadEnd;
 import co.g3a.functionalrop.core.Result;
 import co.g3a.functionalrop.utils.BiFunc;
-import co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
+import co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
 import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

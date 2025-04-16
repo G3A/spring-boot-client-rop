@@ -1,8 +1,7 @@
 package co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario;
 
 import co.g3a.functionalrop.core.Result;
-import co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
-import co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario.Email;
+import co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

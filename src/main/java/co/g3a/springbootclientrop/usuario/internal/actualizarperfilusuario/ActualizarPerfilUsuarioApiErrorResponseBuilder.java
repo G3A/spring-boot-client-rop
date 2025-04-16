@@ -1,4 +1,4 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
+package co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario;
 
 import co.g3a.springbootclientrop.shared.errorhandling.ApiErrorResponse;
 import co.g3a.springbootclientrop.shared.errorhandling.Constantes;

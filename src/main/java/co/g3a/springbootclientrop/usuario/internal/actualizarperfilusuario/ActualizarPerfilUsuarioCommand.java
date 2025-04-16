@@ -1,4 +1,4 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
+package co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario;
 
 /**
  * Ejemplo de uso con campos opcionales y requeridos

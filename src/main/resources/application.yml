@@ -4,21 +4,22 @@ logging:
 management:
     endpoint:
         health:
+            group:
+                liveness:
+                    include: livenessState
             probes:
                 enabled: true
-    observations:
-        annotations:
+    health:
+        livenessState:
             enabled: true
-    otlp:
-        tracing:
-            endpoint: http://localhost:4318/v1/traces
+        readinessState:
+            enabled: true
     tracing:
         sampling:
             probability: 1.0
-otel:
-    logs:
-        exporter:
-            enabled: flase
+tracing:
+    url: http://127.0.0.1:4317
+
 server:
     compression:
         enabled: true

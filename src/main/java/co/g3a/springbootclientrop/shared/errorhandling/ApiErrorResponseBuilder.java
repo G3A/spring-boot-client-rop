@@ -1,5 +1,6 @@
 package co.g3a.springbootclientrop.shared.errorhandling;
 
+import io.micrometer.tracing.Tracer;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -8,13 +9,17 @@ import org.springframework.util.StringUtils;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 public class ApiErrorResponseBuilder {
     public final Environment environment;
+    private final Tracer tracer;
 
-    public ApiErrorResponseBuilder(Environment environment) {
+    public ApiErrorResponseBuilder(Environment environment
+                                   ,Tracer tracer) {
         this.environment = environment;
+        this.tracer = tracer;
     }
 
     public ApiErrorResponse build(
@@ -31,6 +36,7 @@ public class ApiErrorResponseBuilder {
                 Instant.now(),
                 level,
                 message,
+                Objects.requireNonNull(tracer.currentTraceContext().context()).traceId(),
                 userId,
                 sessionId,
                 Arrays.stream(environment.getActiveProfiles()).findFirst().orElse(Constantes.DEFAULT_ENVIRONMENT),
@@ -53,6 +59,7 @@ public class ApiErrorResponseBuilder {
                 Instant.now(),
                 level,
                 message,
+                Objects.requireNonNull(tracer.currentTraceContext().context()).traceId(),
                 "userId",
                 "sessionId",
                 Arrays.stream(environment.getActiveProfiles()).findFirst().orElse(Constantes.DEFAULT_ENVIRONMENT),

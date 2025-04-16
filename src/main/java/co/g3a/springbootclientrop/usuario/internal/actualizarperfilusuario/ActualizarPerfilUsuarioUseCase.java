@@ -1,6 +1,6 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
+package co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario;
 
-import co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
+import co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario.ActualizarPerfilUsuarioApiErrorResponseBuilder.ErrorDefinitions;
 import co.g3a.functionalrop.core.Result;
 import co.g3a.functionalrop.core.ResultPipeline;
 import io.micrometer.observation.annotation.Observed;
@@ -22,7 +22,7 @@ class ActualizarPerfilUsuarioUseCase {
 
     @Async
     @Observed(name = "run", contextualName = "run")
-    public CompletableFuture<Result<String, ErrorDefinitions>> run(ActualizarPerfilUsuarioCommand comando) {
+    public CompletableFuture<Result<String, ErrorDefinitions>> execute(ActualizarPerfilUsuarioCommand comando) {
         return ResultPipeline
                 .<ActualizarPerfilUsuarioCommand, ErrorDefinitions>use(comando)
                 .map(actualizarPerfilUsuarioService::normalizarEmail)

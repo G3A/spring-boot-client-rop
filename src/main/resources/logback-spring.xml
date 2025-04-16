@@ -5,7 +5,7 @@
     <!-- PERFIL: DESARROLLO (DEV) -->
     <!-- ========================= -->
     <springProfile name="dev">
-        <property name="LOG_PATTERN" value="%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%blue(%thread)] [%X{traceId}] %yellow(%logger).%M:%line - %msg%n"/>
+        <property name="LOG_PATTERN" value="%cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] [%X{traceId}] %yellow(%logger).%M:%line - %msg%n"/>
         
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
@@ -22,7 +22,7 @@
     <!-- PERFIL: PRUEBAS (STAGE) -->
     <!-- ========================= -->
     <springProfile name="stage">
-        <property name="LOG_PATTERN" value="%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%blue(%thread)] [%X{traceId}] %yellow(%logger).%M:%line - %msg%n"/>
+        <property name="LOG_PATTERN" value="%cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] [%X{traceId}] %yellow(%logger).%M:%line - %msg%n"/>
         
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>

@@ -1,4 +1,4 @@
-package co.g3a.springbootclientrop.usuario.internal.actualizperfilusuario;
+package co.g3a.springbootclientrop.usuario.internal.actualizarperfilusuario;
 
 import io.micrometer.observation.annotation.Observed;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,7 +65,7 @@ class ActualizarPerfilUsuarioController {
                 .build();
 
 
-        return actualizarPerfilUsuarioUseCase.run(comando)
+        return actualizarPerfilUsuarioUseCase.execute(comando)
                 .thenApply(result -> result.fold(
                         error -> errorBuilder.from(error, httpRequest),
                         ResponseEntity::ok
