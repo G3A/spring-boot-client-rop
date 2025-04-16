@@ -21,7 +21,7 @@ class ActualizarPerfilUsuarioUseCase {
     }
 
     @Async
-    @Observed(name = "run", contextualName = "run")
+    @Observed(name = "execute", contextualName = "execute")
     public CompletableFuture<Result<String, ErrorDefinitions>> execute(ActualizarPerfilUsuarioCommand comando) {
         return ResultPipeline
                 .<ActualizarPerfilUsuarioCommand, ErrorDefinitions>use(comando)

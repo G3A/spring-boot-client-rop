@@ -25,8 +25,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
-
-
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -51,9 +49,7 @@ public class GlobalExceptionHandler {
                 mensaje, // o un mensaje más genérico
                 HttpStatus.BAD_REQUEST.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, errorMessages.toString())),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, errorMessages.toString()))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.BAD_REQUEST, response);
@@ -76,9 +72,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.BAD_REQUEST.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, errorMessages.toString())),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, errorMessages.toString()))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.BAD_REQUEST, response);
@@ -97,9 +91,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.METHOD_NOT_ALLOWED.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, "Método no permitido")),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, "Método no permitido"))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.METHOD_NOT_ALLOWED, "%s. %s".formatted(response, ex.getMessage()));
@@ -120,9 +112,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.METHOD_NOT_ALLOWED.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details)),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.METHOD_NOT_ALLOWED, "%s. %s".formatted(response, ex.getMessage()));
@@ -140,9 +130,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.BAD_REQUEST.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details)),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.BAD_REQUEST, "%s. %s".formatted(response, ex.getMessage()));
@@ -155,8 +143,6 @@ public class GlobalExceptionHandler {
         String mensaje;
         String codigoError;
         String details;
-        final HttpStatus status = HttpStatus.BAD_REQUEST;
-
 
         if (ex.getCause() instanceof JsonParseException) {
             mensaje = "La solicitud JSON es inválida.";
@@ -185,9 +171,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.BAD_REQUEST.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details)),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -205,9 +189,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.NOT_FOUND.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details)),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.NOT_FOUND, "%s. %s".formatted(response, ex.getMessage()));
@@ -231,9 +213,7 @@ public class GlobalExceptionHandler {
                 mensaje,
                 HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details)),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, details))
         );
 
         log.error(OCURRIO_UN_ERROR_MESSAGE, HttpStatus.UNSUPPORTED_MEDIA_TYPE, response);
@@ -251,9 +231,7 @@ public class GlobalExceptionHandler {
                 mensaje, // o un mensaje más genérico
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 request,
-                List.of(new ApiErrorResponse.ErrorDetail(codigoError, "Error 500 (internal server error).")),
-                recuperarUserId(), // desde contexto
-                recuperarSessionId() // desde contexto/cookie
+                List.of(new ApiErrorResponse.ErrorDetail(codigoError, "Error 500 (internal server error)."))
         );
 
         Throwable rootCause=getRootCause(ex);
@@ -268,24 +246,4 @@ public class GlobalExceptionHandler {
         }
         return rootCause;
     }
-
-    private String recuperarUserId() {
-        // Aquí deberías usar SecurityContext, token, etc.
-        //Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //        if (principal instanceof UserDetails) {
-        //            String username = ((UserDetails) principal).getUsername();
-        //            MDC.put("username", username);
-        //        } else {
-        //            String username = principal.toString();
-        //            MDC.put("username", username);
-        //        }
-
-        return "USR-32212";
-    }
-
-    private String recuperarSessionId() {
-        // Lo mismo, si tienes sesión u otras fuentes
-        return "abc123";
-    }
-
 }

@@ -14,11 +14,5 @@ public class SpringBootClientRopApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootClientRopApplication.class, args);
 	}
-/*
-	@Bean
-	public OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
-		return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
-	}
 
- */
 }

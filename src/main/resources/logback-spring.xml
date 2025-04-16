@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
-    
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="Define el nombre de la aplicación desde la propiedad spring.application.name"/>
     <!-- ========================= -->
     <!-- PERFIL: DESARROLLO (DEV) -->
     <!-- ========================= -->
     <springProfile name="dev">
-        <property name="LOG_PATTERN" value="%cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] [%X{traceId}] %yellow(%logger).%M:%line - %msg%n"/>
+        <property name="LOG_PATTERN" value="%cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] [${APP_NAME},%X{traceId:-},%X{spanId:-}]  %yellow(%logger).%M:%line - %msg%n"/>
         
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
@@ -22,7 +22,7 @@
     <!-- PERFIL: PRUEBAS (STAGE) -->
     <!-- ========================= -->
     <springProfile name="stage">
-        <property name="LOG_PATTERN" value="%cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] [%X{traceId}] %yellow(%logger).%M:%line - %msg%n"/>
+        <property name="LOG_PATTERN" value="%cyan(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] [${APP_NAME},%X{traceId:-},%X{spanId:-}] %yellow(%logger).%M:%line - %msg%n"/>
         
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
@@ -40,7 +40,7 @@
     <!-- ========================== -->
     <springProfile name="prod">
         <!-- Patrón sin colores -->
-        <property name="LOG_PATTERN" value="%d{ISO8601} [%thread] %-5level [%X{traceId}] %logger{36} - %msg%n"/>
+        <property name="LOG_PATTERN" value="%d{ISO8601} [%thread] %-5level [${APP_NAME},%X{traceId:-},%X{spanId:-}] %logger{36} - %msg%n"/>
         
         <!-- Appender consola -->
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

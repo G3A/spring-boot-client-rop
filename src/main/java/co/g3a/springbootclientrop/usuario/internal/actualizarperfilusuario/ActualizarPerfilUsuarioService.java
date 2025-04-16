@@ -77,11 +77,11 @@ class ActualizarPerfilUsuarioService {
     private Result<String, ErrorDefinitions> generarCodigoActivacionFromEmail(Email email) {
         log.info("🔑 Generando código de activación para el detail: {}", email.value());
         ActivationCode code = new ActivationCode();
-        /*
+
         if(true) {
             throw new RuntimeException("Alguna excepción en tiempo de ejecución");
         }
-        */
+
         log.info("✔️ Código de activación generado exitosamente. Código: '{}', Email: '{}'", code.value(), email.value());
         return Result.success(code.value());
     }

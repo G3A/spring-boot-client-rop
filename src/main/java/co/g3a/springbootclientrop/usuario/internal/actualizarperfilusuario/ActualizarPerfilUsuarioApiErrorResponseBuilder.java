@@ -21,7 +21,7 @@ public class ActualizarPerfilUsuarioApiErrorResponseBuilder {
 
     public ResponseEntity<Object> from(ErrorDefinitions error, HttpServletRequest request) {
         int status = mapToStatus(error);
-        List<ApiErrorResponse.ErrorDetail> details = switch (error) {
+        List<ApiErrorResponse.ErrorDetail> errorsDetails = switch (error) {
             case ErrorDefinitions.MultipleErrors multi -> multi.errors().stream()
                     .map(this::toErrorDetail)
                     .toList();
@@ -33,7 +33,7 @@ public class ActualizarPerfilUsuarioApiErrorResponseBuilder {
                 Constantes.GENERIC_ERROR_MESSAGE,
                 status,
                 request,
-                details
+                errorsDetails
         );
 
         return ResponseEntity.status(status).body(response);

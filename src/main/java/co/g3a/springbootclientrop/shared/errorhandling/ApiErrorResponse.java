@@ -8,6 +8,7 @@ public record ApiErrorResponse(
     String level,
     String message,
     String traceId,
+    String spanId,
     String userId,
     String sessionId,
     String environment,
