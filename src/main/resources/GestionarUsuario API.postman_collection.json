@@ -1,0 +1,72 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ef",
+    "name": "Spring Boot - Cliente ROP - Usuario API",
+    "description": "Colección de endpoints para registrar y actualizar usuarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Registrar Usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"usuario@ejemplo.com\",\n    \"name\": \"Juan Pérez\",\n    \"password\": \"contrasena123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/gestionar-usuario/registro",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "gestionar-usuario",
+            "registro"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Actualizar Perfil Usuario",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": 1,\n    \"email\": \"nuevoemail@ejemplo.com\",\n    \"name\": \"Juan Actualizado\",\n    \"password\": \"nuevacontra123\",\n    \"age\": 25\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/gestionar-usuario/perfil",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "gestionar-usuario",
+            "perfil"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

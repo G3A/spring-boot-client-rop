@@ -1,6 +1,35 @@
+spring:
+    application:
+        name: spring-boot-client-rop
+        threads:
+            virtual:
+                enabled: true
+    jackson:
+        time-zone: America/Bogota
+    profiles:
+        active: '@spring.profiles.active@'
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 5MB
+            max-request-size: 5MB
+    h2:
+        console:
+            enabled: true
+    jpa:
+        show-sql: true
+    modulith:
+        events:
+            completion-mode: archive
+            republish-outstanding-events-on-restart: true
+
 logging:
     level:
         root: INFO
+
+
+
+
 management:
     endpoint:
         health:
@@ -17,25 +46,12 @@ management:
     tracing:
         sampling:
             probability: 1.0
+
 tracing:
     url: http://127.0.0.1:4317
 
 server:
     compression:
         enabled: true
-        mime-types: '*/*'
-spring:
-    application:
-        name: spring-boot-client-rop
-        threads:
-            virtual:
-                enabled: true
-    jackson:
-        time-zone: America/Bogota
-    profiles:
-        active: '@spring.profiles.active@'
-    servlet:
-        multipart:
-            enabled: true
-            max-file-size: 5MB
-            max-request-size: 5MB
+        mime-types: text/html, text/xml, text/css, application/javascript, application/json
+

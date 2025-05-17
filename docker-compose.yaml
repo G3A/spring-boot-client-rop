@@ -1,6 +1,4 @@
-version: '3.7'
 services:
-
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:

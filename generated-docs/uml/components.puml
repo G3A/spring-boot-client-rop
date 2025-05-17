@@ -1,0 +1,19 @@
+@startuml
+set separator none
+title SpringBootClientRopApplication
+
+top to bottom direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Component>
+
+Container_Boundary("SpringBootClientRopApplication.SpringBootClientRopApplication_boundary", "SpringBootClientRopApplication", $tags="") {
+  Component(SpringBootClientRopApplication.SpringBootClientRopApplication.MóduloUsuario, "Módulo Usuario", $techn="Module", $descr="", $tags="", $link="")
+  Component(SpringBootClientRopApplication.SpringBootClientRopApplication.MóduloShared, "Módulo Shared", $techn="Module", $descr="", $tags="", $link="")
+}
+
+Rel(SpringBootClientRopApplication.SpringBootClientRopApplication.MóduloUsuario, SpringBootClientRopApplication.SpringBootClientRopApplication.MóduloShared, "uses", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml
