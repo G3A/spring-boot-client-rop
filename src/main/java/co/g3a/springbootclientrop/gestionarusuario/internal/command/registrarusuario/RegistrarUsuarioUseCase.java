@@ -2,7 +2,6 @@ package co.g3a.springbootclientrop.gestionarusuario.internal.command.registrarus
 
 
 import co.g3a.functionalrop.core.Result;
-import co.g3a.functionalrop.core.ResultPipeline;
 import co.g3a.functionalrop.core.SyncResultPipeline;
 import co.g3a.springbootclientrop.gestionarusuario.internal.command.registrarusuario.error.RegistrarUsuarioErrors;
 import co.g3a.springbootclientrop.gestionarusuario.internal.command.registrarusuario.event.UsuarioRegistradoEvent;
